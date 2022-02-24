@@ -31,9 +31,11 @@ dependencies:
   easy_splash_screen: ^1.0.3
   firebase_auth: ^3.3.8
   firebase_core: ^1.13.0
+  awesome_dialog: ^2.1.2
+  fl_chart: ^0.45.0
   flutter:
     sdk: flutter
-  get: ^4.6.1
+  
 
 dev_dependencies:
   flutter_lints: ^1.0.0
