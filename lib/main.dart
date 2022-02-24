@@ -4,10 +4,7 @@ import 'package:financeapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
-  runApp(const FinancesApp());
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-}
+void main() => runApp(const FinancesApp());
 
 class FinancesApp extends StatelessWidget {
   const FinancesApp({
@@ -16,7 +13,7 @@ class FinancesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return MaterialApp(
       home: EasySplashScreen(
         logo: Image.asset(imagesName[ImagesId.logoTipo]!),
