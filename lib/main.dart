@@ -1,15 +1,24 @@
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:financeapp/screens/home.dart';
 import 'package:financeapp/screens/welcome.dart';
 import 'package:financeapp/utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(const FinancesApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(FinancesApp());
+}
 
 class FinancesApp extends StatelessWidget {
-  const FinancesApp({
+  FinancesApp({
     Key? key,
   }) : super(key: key);
+
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +37,13 @@ class FinancesApp extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         showLoader: false,
-        navigator: const Welcome(),
+        navigator: currentUser == null ? const Welcome() : const Home(),
         durationInSeconds: 3,
       ),
+      routes: {
+        "/welcome" : (_) => const Welcome(),
+        "/home": (_) => const Home(),
+      },
     );
   }
 }

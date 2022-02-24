@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "127763177731",
+    "project_id": "financesapp-ccc1a",
+    "storage_bucket": "financesapp-ccc1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127763177731:android:fe3530ddcd2ed175878936",
+        "android_client_info": {
+          "package_name": "com.example.financeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127763177731-ep289bhd8m91qte672q3mapdmdtivc2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.financeapp",
+            "certificate_hash": "fc149cec72ba3e7b0d64bc2d79d62cc9872238ba"
+          }
+        },
+        {
+          "client_id": "127763177731-ltnlu9s07fia40lkjat8avvrg29vj8pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW8r6DCzkVRMPSjd45mNfr15xLyDz6Lm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127763177731-ltnlu9s07fia40lkjat8avvrg29vj8pk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "127763177731-1kuboeqi84d8rajqrdeq2ienk4sslb4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.financeapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

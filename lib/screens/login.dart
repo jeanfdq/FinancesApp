@@ -1,16 +1,19 @@
 import 'package:financeapp/components/rounded_button.dart';
 import 'package:financeapp/utils/constants.dart';
+import 'package:financeapp/utils/firebase/firebase_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/custom_textfield.dart';
+import '../utils/functions/show_snackbar.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class Login extends StatelessWidget  {
+  Login({Key? key, required this.callback}) : super(key: key);
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  final Function(User?) callback;
   @override
   Widget build(BuildContext context) {
     // Para deixar a tela fullscreen----------------------------------------
@@ -74,7 +77,13 @@ class Login extends StatelessWidget {
                       label: "Log In",
                       buttonBackgroundColor: primaryColor,
                       width: widthFields,
-                      callback: () {},
+                      callback: () async {
+                        final firebaseUser = await execLogin(email: _emailController.text, password: _passwordController.text);
+
+                        firebaseUser == null
+                            ? showSnackBar(context, message: "Algo deu errado!")
+                            :  Navigator.popAndPushNamed(context, "/home");;
+                      },
                     ),
                   ),
                 ],
@@ -85,4 +94,5 @@ class Login extends StatelessWidget {
       ),
     );
   }
+
 }

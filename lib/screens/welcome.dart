@@ -1,6 +1,7 @@
 import 'package:financeapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../components/rounded_button.dart';
 import 'login.dart';
 import 'signup.dart';
@@ -45,7 +46,9 @@ class Welcome extends StatelessWidget {
                     labelColor: Colors.white,
                     width: imageWidht,
                     callback: () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Login())),
+                        .push(MaterialPageRoute(builder: (context) => Login(callback: (fireabseUser) {
+                          Navigator.pushReplacementNamed(context, "/home");
+                        },))),
                   ),
                   ButtonRounded(
                     label: "Sign Up",

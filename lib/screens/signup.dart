@@ -1,9 +1,12 @@
 import 'package:financeapp/components/rounded_button.dart';
+import 'package:financeapp/screens/home.dart';
 import 'package:financeapp/utils/constants.dart';
+import 'package:financeapp/utils/firebase/firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/custom_textfield.dart';
+import '../utils/functions/show_snackbar.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -83,7 +86,17 @@ class SignUp extends StatelessWidget {
                       label: "Sign Up",
                       buttonBackgroundColor: primaryColor,
                       width: widthFields,
-                      callback: () {},
+                      callback: () async {
+                        
+                        final firebaseUser = await registerLogin(
+                            name: _fullNameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text);
+
+                        firebaseUser == null
+                            ? showSnackBar(context, message: "Algo deu errado!")
+                            : Navigator.popAndPushNamed(context, "/home");
+                      },
                     ),
                   ),
                 ],
