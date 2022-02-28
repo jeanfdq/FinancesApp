@@ -1,10 +1,10 @@
 import 'package:financeapp/components/rounded_button.dart';
 import 'package:financeapp/utils/constants.dart';
-import 'package:financeapp/utils/firebase/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/custom_textfield.dart';
+import '../services/firebase/firebase_services.dart';
 import '../utils/functions/show_snackbar.dart';
 
 class Login extends StatelessWidget  {
