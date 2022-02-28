@@ -12,13 +12,19 @@ class Transaction {
     required this.value,
   });
 
-  String getValue() {
-    return value.toString().replaceAll(".", ",");
-  }
-
 }
 
 enum TransactionType {
-  credit,
-  debit
+  debit, credit
+}
+
+extension ToString on TransactionType {
+  
+  String toLiteralString() {
+
+    switch (this) {
+      case TransactionType.credit: return "Crédito";
+      default: return "Débito";
+    }
+  }
 }

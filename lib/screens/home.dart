@@ -1,6 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:financeapp/components/pie_chart2.dart';
 import 'package:financeapp/models/transaction.dart';
+import 'package:financeapp/screens/profile.dart';
+import 'package:financeapp/screens/transaction_form.dart';
 import 'package:financeapp/screens/transaction_item.dart';
 import 'package:financeapp/utils/mocks/mock_transactions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +16,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +26,35 @@ class Home extends StatelessWidget {
             Icons.person,
             color: Colors.white,
           ),
-          onTap: (){},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (builderContext) => Profile(
+                        callback: () {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.QUESTION,
+                            headerAnimationLoop: false,
+                            animType: AnimType.SCALE,
+                            title: FirebaseAuth
+                                    .instance.currentUser?.displayName ??
+                                "Logout",
+                            desc: 'Deseja realmente sair do app...',
+                            buttonsTextStyle:
+                                const TextStyle(color: Colors.black),
+                            showCloseIcon: false,
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () async {
+                              await FirebaseAuth.instance
+                                  .signOut()
+                                  .whenComplete(() => Navigator.popAndPushNamed(context, "/welcome") ,);
+                            },
+                          ).show();
+                        },
+                      )),
+            );
+          },
         ),
         actions: [
           Padding(
@@ -33,23 +62,7 @@ class Home extends StatelessWidget {
             child: InkWell(
               child: const Icon(Icons.add_circle),
               onTap: () {
-                AwesomeDialog(
-                  context: context,
-                  dialogType: DialogType.QUESTION,
-                  headerAnimationLoop: false,
-                  animType: AnimType.SCALE,
-                  title: FirebaseAuth.instance.currentUser?.displayName ??
-                      "Logout",
-                  desc: 'Deseja realmente sair do app...',
-                  buttonsTextStyle: const TextStyle(color: Colors.black),
-                  showCloseIcon: false,
-                  btnCancelOnPress: () {},
-                  btnOkOnPress: () async {
-                    await FirebaseAuth.instance
-                        .signOut()
-                        .whenComplete(() => Navigator.pop(context));
-                  },
-                ).show();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionForm()));
               },
             ),
           ),
@@ -64,7 +77,6 @@ class Home extends StatelessWidget {
             child: ListView.builder(
               itemCount: listTransactions.length,
               itemBuilder: (context, index) {
-
                 final transaction = listTransactions[index];
 
                 return TransactionItem(transaction: transaction);

@@ -29,3 +29,8 @@ Future<User?> execLogin ( {required String email, required String password}) asy
   }
 
 }
+
+User? getCurrentUser() {
+  return FirebaseAuth.instance.currentUser;
+}
+
