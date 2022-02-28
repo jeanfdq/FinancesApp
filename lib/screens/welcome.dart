@@ -1,7 +1,6 @@
 import 'package:financeapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../components/rounded_button.dart';
 import 'login.dart';
 import 'signup.dart';

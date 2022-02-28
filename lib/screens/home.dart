@@ -1,10 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:financeapp/components/rounded_button.dart';
-import 'package:financeapp/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
 import '../components/bar_chart.dart';
 
 class Home extends StatelessWidget {
@@ -45,7 +41,7 @@ class Home extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.white,
-      body: BarChartPage(),
+      body: const BarChartPage(),
     );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:financeapp/components/rounded_button.dart';
-import 'package:financeapp/screens/home.dart';
 import 'package:financeapp/utils/constants.dart';
 import 'package:financeapp/utils/firebase/firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../components/custom_textfield.dart';
 import '../utils/functions/show_snackbar.dart';
 

@@ -4,7 +4,6 @@ import 'package:financeapp/utils/firebase/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../components/custom_textfield.dart';
 import '../utils/functions/show_snackbar.dart';
 
@@ -82,7 +81,7 @@ class Login extends StatelessWidget  {
 
                         firebaseUser == null
                             ? showSnackBar(context, message: "Algo deu errado!")
-                            :  Navigator.popAndPushNamed(context, "/home");;
+                            :  Navigator.popAndPushNamed(context, "/home");
                       },
                     ),
                   ),

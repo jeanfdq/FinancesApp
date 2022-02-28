@@ -1,10 +1,9 @@
 import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartPage extends StatefulWidget {
-  BarChartPage({Key? key}) : super(key: key);
+  const BarChartPage({Key? key}) : super(key: key);
 
   final List<Color> availableColors = const [
     Colors.purpleAccent,
