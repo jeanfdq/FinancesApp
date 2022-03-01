@@ -22,7 +22,7 @@ class FinancesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     return MaterialApp(
       home: EasySplashScreen(
         logo: Image.asset(imagesName[ImagesId.logoTipo]!),

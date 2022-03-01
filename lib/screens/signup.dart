@@ -17,7 +17,8 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Para deixar a tela fullscreen----------------------------------------
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     final screenWidth = MediaQuery.of(context).size.width;
     final widthFields = screenWidth * 0.8;
 
@@ -30,7 +31,7 @@ class SignUp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 18, bottom: 40),
+                  padding: const EdgeInsets.only(left: 18, bottom: 40, top: 40),
                   child: InkWell(
                     child: const Icon(Icons.arrow_back_ios),
                     onTap: () => Navigator.pop(context),

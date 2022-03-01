@@ -11,7 +11,8 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Para deixar a tela fullscreen----------------------------------------
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
     final screenWidth = MediaQuery.of(context).size.width;
     final imageWidht = screenWidth * 0.7;
