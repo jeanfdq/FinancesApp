@@ -1,10 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:financeapp/components/rounded_button.dart';
 import 'package:financeapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/custom_textfield.dart';
+import '../components/dialog.dart';
 import '../services/firebase/firebase_login_services.dart';
-import '../utils/functions/show_snackbar.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -92,7 +93,13 @@ class SignUp extends StatelessWidget {
                             password: _passwordController.text);
 
                         firebaseUser == null
-                            ? showSnackBar(context, message: "Algo deu errado!")
+                            ? dialogAwesome(
+                                context,
+                                DialogType.ERROR,
+                                "Sign Up",
+                                "Ops, algo saiu errado!",
+                                btnOk: () {},
+                              ).show()
                             : Navigator.popAndPushNamed(context, "/home");
                       },
                     ),

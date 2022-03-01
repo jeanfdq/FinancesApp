@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:financeapp/components/dialog.dart';
 import 'package:financeapp/components/rounded_button.dart';
 import 'package:financeapp/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/custom_textfield.dart';
 import '../services/firebase/firebase_login_services.dart';
-import '../utils/functions/show_snackbar.dart';
 
-class Login extends StatelessWidget  {
+class Login extends StatelessWidget {
   Login({Key? key, required this.callback}) : super(key: key);
 
   final _emailController = TextEditingController();
@@ -56,6 +57,7 @@ class Login extends StatelessWidget  {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextField(
+                    autoFocus: true,
                     width: widthFields,
                     keyboard: TextInputType.emailAddress,
                     textCapitalization: TextCapitalization.none,
@@ -77,11 +79,19 @@ class Login extends StatelessWidget  {
                       buttonBackgroundColor: primaryColor,
                       width: widthFields,
                       callback: () async {
-                        final firebaseUser = await execLogin(email: _emailController.text, password: _passwordController.text);
+                        final errorMessage = await execLogin(
+                            email: _emailController.text,
+                            password: _passwordController.text);
 
-                        firebaseUser == null
-                            ? showSnackBar(context, message: "Algo deu errado!")
-                            :  Navigator.popAndPushNamed(context, "/home");
+                        errorMessage != null
+                            ? dialogAwesome(
+                                context,
+                                DialogType.INFO,
+                                "Log In",
+                                errorMessage,
+                                btnOk: () {},
+                              ).show()
+                            : Navigator.popAndPushNamed(context, "/home");
                       },
                     ),
                   ),
@@ -93,5 +103,4 @@ class Login extends StatelessWidget  {
       ),
     );
   }
-
 }

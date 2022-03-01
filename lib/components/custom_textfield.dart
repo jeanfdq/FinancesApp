@@ -7,11 +7,13 @@ class CustomTextField extends StatelessWidget {
     this.keyboard = TextInputType.name,
     this.isSecurity = false,
     this.textCapitalization = TextCapitalization.words,
+    this.autoFocus = false,
     required this.width,
     required this.hint,
     required this.controller,
   }) : super(key: key);
 
+  final bool autoFocus;
   final double width;
   final TextInputType keyboard;
   final String hint;
@@ -25,6 +27,7 @@ class CustomTextField extends StatelessWidget {
       height: 52,
       width: width,
       child: TextField(
+        autofocus: autoFocus,
         keyboardAppearance: Brightness.light,
         keyboardType: keyboard,
         textCapitalization: textCapitalization,

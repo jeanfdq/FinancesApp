@@ -37,12 +37,12 @@ class FinancesApp extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         showLoader: false,
-        navigator: currentUser == null ? const Welcome() : Home(),
+        navigator: currentUser == null ? const Welcome() : const Home(),
         durationInSeconds: 3,
       ),
       routes: {
         "/welcome" : (_) => const Welcome(),
-        "/home": (_) => Home(),
+        "/home": (_) => const Home(),
       },
     );
   }

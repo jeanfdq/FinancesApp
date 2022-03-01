@@ -4,7 +4,7 @@ import 'package:financeapp/utils/extensions/ext_double.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-Widget pieChart2(BuildContext context, double height, double width) {
+Widget pieChart(BuildContext context, double height, double width) {
   const creditCard = "Cartão \nde Crédito";
   const car = "Carro";
   const pets = "Pets";

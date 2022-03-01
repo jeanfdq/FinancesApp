@@ -1,12 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:financeapp/components/rounded_button.dart';
 import 'package:financeapp/models/transaction.dart';
+import 'package:financeapp/services/firebase/firebase_login_services.dart';
 import 'package:financeapp/services/firebase/firebase_transaction_services.dart';
 import 'package:financeapp/utils/extensions/ext_string.dart';
 import 'package:financeapp/utils/functions/generate_uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:form_validator/form_validator.dart';
+
+import '../components/dialog.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -84,6 +87,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               .minLength(2)
                               .maxLength(15)
                               .build(),
+                              true,
                           TextInputType.name,
                           "Lavagem de Carros",
                           _titleController),
@@ -110,6 +114,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                 .minLength(2)
                                 .maxLength(15)
                                 .build(),
+                                null,
                             TextInputType.name,
                             "Supermercado",
                             _categoryController)),
@@ -135,7 +140,8 @@ class _TransactionFormState extends State<TransactionForm> {
                               .minLength(1)
                               .maxLength(15)
                               .build(),
-                          TextInputType.name,
+                              null,
+                          TextInputType.number,
                           "R\$ 150,16",
                           _valueController),
                     ),
@@ -161,7 +167,6 @@ class _TransactionFormState extends State<TransactionForm> {
                       _form.currentState?.validate() ?? false;
 
                   if (currentFormState) {
-
                     final id = generateUUId();
 
                     final transaction = TransactionFinance(
@@ -172,19 +177,18 @@ class _TransactionFormState extends State<TransactionForm> {
                       title: _titleController.text,
                       category: _categoryController.text,
                       value: _valueController.text.toDouble(),
+                      userId: getUserID(),
                     );
                     final isRegister = await registerTransaction(transaction);
                     if (isRegister) {
                       Navigator.pop(context);
                     } else {
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.ERROR,
-                        title: "Ops, Algo deu errado!",
-                        animType: AnimType.SCALE,
-                        desc: 'Verifique os dados inseridos!',
-                        showCloseIcon: false,
-                        btnCancelOnPress: () {},
+                      dialogAwesome(
+                        context,
+                        DialogType.ERROR,
+                        "Ops, Algo deu errado!",
+                        'Verifique os dados inseridos!',
+                        btnCancel: () {},
                       ).show();
                     }
                   }
@@ -199,12 +203,15 @@ class _TransactionFormState extends State<TransactionForm> {
 
   TextFormField customTextField(
       String? Function(String?)? validator,
+      bool? autofocus ,
       TextInputType keyboardType,
       String hint,
-      TextEditingController controller) {
+      TextEditingController controller,
+       ) {
     return TextFormField(
       validator: validator,
       keyboardType: keyboardType,
+      autofocus: autofocus ?? false,
       textCapitalization: TextCapitalization.words,
       textAlign: TextAlign.end,
       decoration: getInputDecoration(hint),

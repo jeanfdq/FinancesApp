@@ -5,6 +5,7 @@ class TransactionFinance {
   final String title;
   final String category;
   final double value;
+  final String userId;
 
   TransactionFinance({
     required this.id,
@@ -12,6 +13,7 @@ class TransactionFinance {
     required this.title,
     required this.category,
     required this.value,
+    required this.userId
   });
 }
 

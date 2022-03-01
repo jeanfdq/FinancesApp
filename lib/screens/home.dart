@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:financeapp/components/dialog.dart';
 import 'package:financeapp/components/pie_chart2.dart';
 import 'package:financeapp/models/transaction.dart';
 import 'package:financeapp/screens/profile.dart';
@@ -39,20 +40,14 @@ class _HomeState extends State<Home> {
               MaterialPageRoute(
                   builder: (builderContext) => Profile(
                         callback: () {
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.QUESTION,
-                            headerAnimationLoop: false,
-                            animType: AnimType.SCALE,
-                            title: FirebaseAuth
-                                    .instance.currentUser?.displayName ??
+                          dialogAwesome(
+                            context,
+                            DialogType.QUESTION,
+                            FirebaseAuth.instance.currentUser?.displayName ??
                                 "Logout",
-                            desc: 'Deseja realmente sair do app...',
-                            buttonsTextStyle:
-                                const TextStyle(color: Colors.black),
-                            showCloseIcon: false,
-                            btnCancelOnPress: () {},
-                            btnOkOnPress: () async {
+                            'Deseja realmente sair do app...',
+                            btnCancel: () {},
+                            btnOk: () async {
                               await FirebaseAuth.instance
                                   .signOut()
                                   .whenComplete(
@@ -77,9 +72,7 @@ class _HomeState extends State<Home> {
                         MaterialPageRoute(
                             builder: (context) => const TransactionForm()))
                     .then((value) {
-                  setState(() {
-                    //Apenas para atualizar o FutureBuilder
-                  });
+                  _atualizaState();
                 });
               },
             ),
@@ -90,7 +83,7 @@ class _HomeState extends State<Home> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          pieChart2(context, 300, screenSize.width),
+          pieChart(context, 300, screenSize.width),
           Expanded(
             child: FutureBuilder<List<TransactionFinance>>(
               initialData: const [],
@@ -115,21 +108,29 @@ class _HomeState extends State<Home> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onLongPress: () {
-                                
+                                dialogAwesome(
+                                  context,
+                                  DialogType.QUESTION,
+                                  "Deletar Transaction!",
+                                  "Deseja realmente deletar essa transação?",
+                                  btnCancel: () {},
+                                  btnOk: () async {
+                                    await deleteTransaction(listTransactions[index].id).whenComplete(() => _atualizaState());
+
+                                  },
+                                ).show();
                               },
                               child: TransactionItem(
                                   transaction: listTransactions[index]),
                             );
                           });
                     } else {
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.ERROR,
-                        title: "Ops, Algo deu errado!",
-                        animType: AnimType.SCALE,
-                        desc: 'Verifique sua conexão e tente novamente!',
-                        showCloseIcon: false,
-                        btnCancelOnPress: () {},
+                      dialogAwesome(
+                        context,
+                        DialogType.ERROR,
+                        "Ops, Algo deu errado!",
+                        'Verifique sua conexão e tente novamente!',
+                        btnCancel: () {},
                       ).show();
                       return Container();
                     }
@@ -144,4 +145,11 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  void _atualizaState() {
+    setState(() {
+      
+    });
+  }
+
 }
