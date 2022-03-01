@@ -1,5 +1,5 @@
 import 'package:financeapp/components/rounded_button.dart';
-import 'package:financeapp/services/firebase/firebase_services.dart';
+import 'package:financeapp/services/firebase/firebase_login_services.dart';
 import 'package:financeapp/utils/extensions/ext_color.dart';
 import 'package:flutter/material.dart';
 

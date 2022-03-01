@@ -1,17 +1,18 @@
 
-class Transaction {
+class TransactionFinance {
+  final String id;
   final TransactionType type;
   final String title;
-  final String subTitle;
+  final String category;
   final double value;
 
-  Transaction({
+  TransactionFinance({
+    required this.id,
     required this.type,
     required this.title,
-    required this.subTitle,
+    required this.category,
     required this.value,
   });
-
 }
 
 enum TransactionType {

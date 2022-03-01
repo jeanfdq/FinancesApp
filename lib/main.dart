@@ -1,7 +1,7 @@
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:financeapp/screens/home.dart';
 import 'package:financeapp/screens/welcome.dart';
-import 'package:financeapp/services/firebase/firebase_services.dart';
+import 'package:financeapp/services/firebase/firebase_login_services.dart';
 import 'package:financeapp/utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

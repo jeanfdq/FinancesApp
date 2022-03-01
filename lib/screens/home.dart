@@ -4,14 +4,21 @@ import 'package:financeapp/models/transaction.dart';
 import 'package:financeapp/screens/profile.dart';
 import 'package:financeapp/screens/transaction_form.dart';
 import 'package:financeapp/screens/transaction_item.dart';
-import 'package:financeapp/utils/mocks/mock_transactions.dart';
+import 'package:financeapp/services/firebase/firebase_transaction_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+import '../components/center_progress_indicator.dart';
 
-  final List<Transaction> listTransactions = MockTransaction();
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final List<TransactionFinance> listTransactions = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,10 @@ class Home extends StatelessWidget {
                             btnOkOnPress: () async {
                               await FirebaseAuth.instance
                                   .signOut()
-                                  .whenComplete(() => Navigator.popAndPushNamed(context, "/welcome") ,);
+                                  .whenComplete(
+                                    () => Navigator.popAndPushNamed(
+                                        context, "/welcome"),
+                                  );
                             },
                           ).show();
                         },
@@ -62,7 +72,15 @@ class Home extends StatelessWidget {
             child: InkWell(
               child: const Icon(Icons.add_circle),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionForm()));
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TransactionForm()))
+                    .then((value) {
+                  setState(() {
+                    //Apenas para atualizar o FutureBuilder
+                  });
+                });
               },
             ),
           ),
@@ -74,13 +92,52 @@ class Home extends StatelessWidget {
         children: [
           pieChart2(context, 300, screenSize.width),
           Expanded(
-            child: ListView.builder(
-              itemCount: listTransactions.length,
-              itemBuilder: (context, index) {
-                final transaction = listTransactions[index];
+            child: FutureBuilder<List<TransactionFinance>>(
+              initialData: const [],
+              future: fetchAllTransactions(),
+              builder: ((context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Container();
 
-                return TransactionItem(transaction: transaction);
-              },
+                  case ConnectionState.waiting:
+                    return const CenterProgressIndicator();
+
+                  case ConnectionState.active:
+                    return Container();
+
+                  case ConnectionState.done:
+                    if (snapshot.hasData) {
+                      final listTransactions =
+                          snapshot.data as List<TransactionFinance>;
+                      return ListView.builder(
+                          itemCount: listTransactions.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onLongPress: () {
+                                
+                              },
+                              child: TransactionItem(
+                                  transaction: listTransactions[index]),
+                            );
+                          });
+                    } else {
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.ERROR,
+                        title: "Ops, Algo deu errado!",
+                        animType: AnimType.SCALE,
+                        desc: 'Verifique sua conexão e tente novamente!',
+                        showCloseIcon: false,
+                        btnCancelOnPress: () {},
+                      ).show();
+                      return Container();
+                    }
+
+                  default:
+                    return Container();
+                }
+              }),
             ),
           ),
         ],

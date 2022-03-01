@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/custom_textfield.dart';
-import '../services/firebase/firebase_services.dart';
+import '../services/firebase/firebase_login_services.dart';
 import '../utils/functions/show_snackbar.dart';
 
 class Login extends StatelessWidget  {

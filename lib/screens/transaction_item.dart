@@ -7,7 +7,7 @@ class TransactionItem extends StatelessWidget {
   TransactionItem({Key? key, required this.transaction})
       : super(key: key);
 
-  final Transaction transaction;
+  final TransactionFinance transaction;
   final currency =
       NumberFormat.currency(locale: "pt_BR", decimalDigits: 2, symbol: "R\$");
 
@@ -23,7 +23,7 @@ class TransactionItem extends StatelessWidget {
               : Colors.green,
         ),
         title: Text(transaction.title),
-        subtitle: Text(transaction.subTitle),
+        subtitle: Text(transaction.category),
         trailing: Container(
           width: 110,
           height: 30,
