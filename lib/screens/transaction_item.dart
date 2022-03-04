@@ -1,13 +1,12 @@
-import 'package:financeapp/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../domain/entities/transaction_entity.dart';
 import '../utils/extensions/ext_color.dart';
 
 class TransactionItem extends StatelessWidget {
-  TransactionItem({Key? key, required this.transaction})
-      : super(key: key);
+  TransactionItem({Key? key, required this.transaction}) : super(key: key);
 
-  final TransactionFinance transaction;
+  final TransactionEntity transaction;
   final currency =
       NumberFormat.currency(locale: "pt_BR", decimalDigits: 2, symbol: "R\$");
 

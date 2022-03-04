@@ -1,18 +1,20 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:financeapp/components/rounded_button.dart';
-import 'package:financeapp/models/transaction.dart';
-import 'package:financeapp/services/firebase/firebase_login_services.dart';
-import 'package:financeapp/services/firebase/firebase_transaction_services.dart';
 import 'package:financeapp/utils/extensions/ext_string.dart';
 import 'package:financeapp/utils/functions/generate_uuid.dart';
+import 'package:financeapp/utils/functions/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:form_validator/form_validator.dart';
-
 import '../components/dialog.dart';
+import '../domain/entities/transaction_entity.dart';
+import '../presentation/transaction_form_presenter.dart';
 
 class TransactionForm extends StatefulWidget {
-  const TransactionForm({Key? key}) : super(key: key);
+  const TransactionForm({Key? key, required this.presenter}) : super(key: key);
+  static const id = "/transaction_form";
+
+  final TransactionFormPresenter presenter;
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -48,11 +50,15 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = getScreenSize(context).width;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Transação"),
+        leading: InkWell(
+          child: const Icon(Icons.arrow_back),
+          onTap: widget.presenter.onBack,
+        ),
       ),
       body: Form(
         key: _form,
@@ -87,7 +93,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               .minLength(2)
                               .maxLength(15)
                               .build(),
-                              true,
+                          true,
                           TextInputType.name,
                           "Lavagem de Carros",
                           _titleController),
@@ -114,7 +120,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                 .minLength(2)
                                 .maxLength(15)
                                 .build(),
-                                null,
+                            null,
                             TextInputType.name,
                             "Supermercado",
                             _categoryController)),
@@ -140,7 +146,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               .minLength(1)
                               .maxLength(15)
                               .build(),
-                              null,
+                          null,
                           TextInputType.number,
                           "R\$ 150,16",
                           _valueController),
@@ -169,7 +175,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   if (currentFormState) {
                     final id = generateUUId();
 
-                    final transaction = TransactionFinance(
+                    final transaction = TransactionEntity(
                       id: id,
                       type: _currentType == "Débito"
                           ? TransactionType.debit
@@ -177,20 +183,19 @@ class _TransactionFormState extends State<TransactionForm> {
                       title: _titleController.text,
                       category: _categoryController.text,
                       value: _valueController.text.toDouble(),
-                      userId: getUserID(),
+                      userId: widget.presenter.onGetUserID(),
                     );
-                    final isRegister = await registerTransaction(transaction);
-                    if (isRegister) {
-                      Navigator.pop(context);
-                    } else {
-                      dialogAwesome(
-                        context,
-                        DialogType.ERROR,
-                        "Ops, Algo deu errado!",
-                        'Verifique os dados inseridos!',
-                        btnCancel: () {},
-                      ).show();
-                    }
+                    final isRegister = await widget.presenter
+                        .onRegisterTransaction(transaction);
+                    isRegister
+                        ? widget.presenter.onBack()
+                        : dialogAwesome(
+                            context,
+                            DialogType.ERROR,
+                            "Ops, Algo deu errado!",
+                            'Verifique os dados inseridos!',
+                            btnCancel: () {},
+                          ).show();
                   }
                 },
               ),
@@ -202,12 +207,12 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   TextFormField customTextField(
-      String? Function(String?)? validator,
-      bool? autofocus ,
-      TextInputType keyboardType,
-      String hint,
-      TextEditingController controller,
-       ) {
+    String? Function(String?)? validator,
+    bool? autofocus,
+    TextInputType keyboardType,
+    String hint,
+    TextEditingController controller,
+  ) {
     return TextFormField(
       validator: validator,
       keyboardType: keyboardType,

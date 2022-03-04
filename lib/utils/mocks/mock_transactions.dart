@@ -1,7 +1,7 @@
 
-import '../../models/transaction.dart';
+import '../../data/models/transaction.dart';
 
-List<TransactionFinance> MockTransaction(){
+List<TransactionFinance> mockTransaction(){
 
     final List<TransactionFinance> list = [];
 

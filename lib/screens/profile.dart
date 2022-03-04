@@ -1,22 +1,34 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:financeapp/components/rounded_button.dart';
-import 'package:financeapp/services/firebase/firebase_login_services.dart';
+import 'package:financeapp/presentation/profile_presenter.dart';
 import 'package:financeapp/utils/extensions/ext_color.dart';
+import 'package:financeapp/utils/functions/screen_size.dart';
 import 'package:flutter/material.dart';
+import '../components/dialog.dart';
 
 class Profile extends StatelessWidget {
-  Profile({Key? key, required this.callback}) : super(key: key);
+  const Profile({Key? key, required this.presenter}) : super(key: key);
 
-  final userName = getCurrentUser()?.displayName ?? "No User";
-  final userEmail = getCurrentUser()?.email ?? "No User";
-  final VoidCallback callback;
+  static const id = "/Profile";
+
+  final ProfilePresenter presenter;
 
   @override
   Widget build(BuildContext context) {
-    final widthButton = MediaQuery.of(context).size.width;
+    final widthButton = getScreenSize(context).width;
+
+    final userName = presenter.onGetCurrentUser()?.displayName ?? "No User";
+    final userEmail = presenter.onGetCurrentUser()?.email ?? "No User";
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(userName),
+        automaticallyImplyLeading: false,
+        leading: InkWell(
+          child: const Icon(Icons.arrow_back),
+          onTap: presenter.onBack,
+        ),
       ),
       body: Column(
         children: [
@@ -66,9 +78,18 @@ class Profile extends StatelessWidget {
               label: "Logout",
               buttonBackgroundColor: HexColor.fromHex("#e57373"),
               width: widthButton,
-              callback: callback,
+              callback: () {
+                dialogAwesome(
+                  context,
+                  DialogType.QUESTION,
+                  "Sign Out",
+                  "Deseja realmente sair do sistema?",
+                  btnCancel: () {},
+                  btnOk: presenter.onSignOut,
+                ).show();
+              },
             ),
-          )
+          ),
         ],
       ),
     );

@@ -1,20 +1,24 @@
+import 'package:financeapp/presentation/welcome_presenter.dart';
 import 'package:financeapp/utils/constants.dart';
+import 'package:financeapp/utils/functions/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/rounded_button.dart';
-import 'login.dart';
-import 'signup.dart';
 
 class Welcome extends StatelessWidget {
-  const Welcome({Key? key}) : super(key: key);
+  const Welcome({Key? key, required this.presenter}) : super(key: key);
+
+  static const id = "/Welcome";
+
+  final WelComePresenter presenter;
 
   @override
   Widget build(BuildContext context) {
-    // Para deixar a tela fullscreen----------------------------------------
-    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    // Para deixar a tela fullscreen---------------------------
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    //---------------------------------------------------------
 
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = getScreenSize(context).width;
     final imageWidht = screenWidth * 0.7;
 
     return Scaffold(
@@ -45,18 +49,14 @@ class Welcome extends StatelessWidget {
                     buttonBackgroundColor: primaryColor,
                     labelColor: Colors.white,
                     width: imageWidht,
-                    callback: () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Login(callback: (fireabseUser) {
-                          Navigator.pushReplacementNamed(context, "/home");
-                        },))),
+                    callback: presenter.onGoToLogin,
                   ),
                   ButtonRounded(
                     label: "Sign Up",
                     buttonBackgroundColor: Colors.white,
                     labelColor: primaryColor,
                     width: imageWidht,
-                    callback: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SignUp())),
+                    callback: presenter.onGoToSignUp,
                   ),
                 ],
               ),

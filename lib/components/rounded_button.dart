@@ -17,7 +17,7 @@ class ButtonRounded extends StatelessWidget {
   final Color labelColor;
   final Color buttonBackgroundColor;
   final double width; 
-  final VoidCallback callback;
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) {

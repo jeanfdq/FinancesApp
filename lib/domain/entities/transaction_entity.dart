@@ -1,5 +1,6 @@
 
-class TransactionFinance {
+class TransactionEntity {
+
   final String id;
   final TransactionType type;
   final String title;
@@ -7,7 +8,7 @@ class TransactionFinance {
   final double value;
   final String userId;
 
-  TransactionFinance({
+  TransactionEntity({
     required this.id,
     required this.type,
     required this.title,
@@ -15,6 +16,7 @@ class TransactionFinance {
     required this.value,
     required this.userId
   });
+
 }
 
 enum TransactionType {
