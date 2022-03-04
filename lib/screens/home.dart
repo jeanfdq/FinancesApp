@@ -7,7 +7,6 @@ import 'package:financeapp/utils/constants.dart';
 import 'package:financeapp/utils/functions/screen_size.dart';
 import 'package:flutter/material.dart';
 import '../components/center_progress_indicator.dart';
-import '../data/models/transaction.dart';
 import '../domain/entities/transaction_entity.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +19,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 class _HomeState extends State<Home> {
-  final List<TransactionFinance> listTransactions = [];
+  final List<TransactionEntity> listTransactions = [];
 
   @override
   Widget build(BuildContext context) {
