@@ -66,12 +66,16 @@ class _TransactionFormState extends State<TransactionForm> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: ListTile(
-                leading: getLabel("Tipo:"),
-                trailing: DropdownButton(
-                  value: _currentType,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem,
+              child: SizedBox(
+                width: screenWidth,
+                height: 45,
+                child: ListTile(
+                  leading: getLabel("Tipo:"),
+                  trailing: DropdownButton(
+                    value: _currentType,
+                    items: _dropDownMenuItems,
+                    onChanged: changedDropDownItem,
+                  ),
                 ),
               ),
             ),
@@ -161,7 +165,7 @@ class _TransactionFormState extends State<TransactionForm> {
               color: Colors.grey,
             ),
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(20.0),
               child: ButtonRounded(
                 label: "Salvar transação",
                 labelColor: Colors.black,
