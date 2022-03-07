@@ -1,5 +1,3 @@
-
-
 import 'package:financeapp/domain/entities/transaction_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -17,5 +15,9 @@ void main() {
     final transaction = TransactionEntity(id: "", type: TransactionType.debit, title: "title", category: "category", value: 100, userId: "userId");
     expect("Débito", transaction.type.toLiteralString());
 
+  });
+
+  test("Deve devolver uma exception caso o valor da transação seja menor ou igual a zero", (){
+    expect(()=> TransactionEntity(id: "", type: TransactionType.debit, title: "title", category: "category", value: 0, userId: "userId"), throwsAssertionError );
   });
 }

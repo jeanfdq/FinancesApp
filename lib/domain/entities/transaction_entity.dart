@@ -15,7 +15,7 @@ class TransactionEntity {
     required this.category,
     required this.value,
     required this.userId
-  });
+  }) : assert(value > 0) ;
 
 }
 
