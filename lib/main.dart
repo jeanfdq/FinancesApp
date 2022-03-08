@@ -36,6 +36,7 @@ class FinancesApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       home: EasySplashScreen(
         logo: Image.asset(imagesName[ImagesId.logoTipo]!),
         logoSize: 120,
